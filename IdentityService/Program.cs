@@ -1,8 +1,4 @@
-using IdentityService.Common;
-using Microsoft.Extensions.Options;
-using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
-using Swashbuckle.AspNetCore.SwaggerUI;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
@@ -17,9 +13,9 @@ builder.Services.AddSwaggerGen(c =>
         Title = "Identity Service",
         Version = "v1"
     });
-    c.AddSecurityDefinition("Authentication", new OpenApiSecurityScheme
+    c.AddSecurityDefinition("basic", new OpenApiSecurityScheme
     {
-        // Name = "Authorization",
+        Name = "Authorization",
         In = ParameterLocation.Header,
         Type = SecuritySchemeType.Http,
         Description = "Basic authentication with user id and password",
@@ -37,7 +33,6 @@ builder.Services.AddSwaggerGen(c =>
             }, new List<string>()
         }
     });
-    c.OperationFilter<SwaggerBasicAuthFilter>();
 });
 
 var app = builder.Build();
